@@ -1,7 +1,7 @@
 'use strict';
 
 // Call this function when the page loads (the "ready" event)
-$(document).ready(function() {
+$(document).ready(function () {
 	initializePage();
 })
 
@@ -27,4 +27,21 @@ function addProjectDetails(e) {
 	var idNumber = projectID.substr('project'.length);
 
 	console.log("User clicked on project " + idNumber);
+
+	var dir = "/project/" + idNumber;
+	console.log(dir);
+	$.get(dir, getProject)
+}
+
+function getProject(response) {
+	// check fetched data
+	console.log(response)
+
+	// build html to place inside details container in index.html
+	var projectHTML = '<p>' + response['title'] + '</p>' + '<br/>' +
+		'<p>' + response['date'] + '</p>' + '<br/>' +
+		'<img src="' + response['image'] + '" class="detailsImage">' +
+		response['summary'];
+
+	$("#project" + response['id'] + " .details").html(projectHTML);
 }
